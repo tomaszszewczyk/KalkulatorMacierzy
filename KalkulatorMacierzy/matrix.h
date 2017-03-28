@@ -111,8 +111,8 @@ public:
 	friend ostream& operator<<(ostream& output, matrix<T> dane);
 
 	//Wymiary macierzy
-	int iloscWierszy() { return (*this).size(); }
-	int iloscKolumn() { return (*this)[0].size(); }
+	size_t iloscWierszy() { return (*this).size(); }
+	size_t iloscKolumn() { return (*this)[0].size(); }
 };
 
 template <class T>
@@ -125,8 +125,8 @@ ostream& operator<<(ostream& output, matrix<T> dane)
 template<class T>
 vector<vector<char>> toMatrix(matrix<T>& dana)
 {
-	const int ilosc_wierszy = dana.iloscWierszy();
-	const int ilosc_kolumn = dana.iloscKolumn();
+	const size_t ilosc_wierszy = dana.iloscWierszy();
+	const size_t ilosc_kolumn = dana.iloscKolumn();
 	vector<vector<char>> wynik;
 	//Dla kazdego wiersza
 	for (int wiersz = 0; wiersz < ilosc_wierszy; wiersz++)
@@ -137,7 +137,7 @@ vector<vector<char>> toMatrix(matrix<T>& dana)
 		for (int numer_elementu = 0; numer_elementu < ilosc_kolumn; numer_elementu++)
 		{
 			vector<vector<char>> element = toMatrix(dana[wiersz][numer_elementu]);
-			const int dlugosc_elementu = element[0].size();
+			const size_t dlugosc_elementu = element[0].size();
 			//Dla kazdego znaku elementu
 			for (int znak = 0; znak < dlugosc_elementu; znak++)
 				wynik[wiersz].push_back(element[0][znak]);
@@ -152,10 +152,10 @@ vector<vector<char>> toMatrix(matrix<T>& dana)
 template<class T>
 vector<vector<char>> toMatrix(matrix<matrix<T>>& dana)
 {
-	const int ilosc_wierszy = dana.iloscWierszy();
-	const int ilosc_kolumn = dana.iloscKolumn();
-	const int ilosc_wierszy_elementu = toMatrix(dana[0][0]).size();
-	const int ilosc_kolumn_elementu = toMatrix(dana[0][0])[0].size();
+	const size_t ilosc_wierszy = dana.iloscWierszy();
+	const size_t ilosc_kolumn = dana.iloscKolumn();
+	const size_t ilosc_wierszy_elementu = toMatrix(dana[0][0]).size();
+	const size_t ilosc_kolumn_elementu = toMatrix(dana[0][0])[0].size();
 
 	vector<vector<char>> wynik;
 	//Dla kazdego wiersza
@@ -172,8 +172,8 @@ vector<vector<char>> toMatrix(matrix<matrix<T>>& dana)
 		for (int numer_elementu = 0; numer_elementu < ilosc_kolumn; numer_elementu++)
 		{
 			vector<vector<char>> element = toMatrix(dana[wiersz][numer_elementu]);
-			const int ilosc_wierszy_elementu = element.size();
-			const int ilosc_kolumn_elementu = element[0].size();
+			const size_t ilosc_wierszy_elementu = element.size();
+			const size_t ilosc_kolumn_elementu = element[0].size();
 			//Dla kazdego wiersza elementu
 			for (int wiersz_elementu = 0; wiersz_elementu < ilosc_wierszy_elementu; wiersz_elementu++)
 			{
@@ -192,7 +192,7 @@ vector<vector<char>> toMatrix(matrix<matrix<T>>& dana)
 			wynik[wiersz*(ilosc_wierszy_elementu + 1) + wiersz_elementu].push_back('|');
 		}
 		//Pusty wiersz
-		const int rozmiar_wiersza = wynik[0].size();
+		const size_t rozmiar_wiersza = wynik[0].size();
 		vector<char>& pusty_wiersz = wynik[(wiersz + 1)*(ilosc_wierszy_elementu + 1) - 1];
 		while (pusty_wiersz.size() != rozmiar_wiersza - 1)
 			pusty_wiersz.push_back(' ');

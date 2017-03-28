@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -66,9 +67,9 @@ public:
 			wynik.push_back(vector<char>());
 			wynik[wiersz].push_back('|');
 			//Dla kazdego elementu w wierszu
-			for (int elementnr = 0; elementnr < ilosc_kolumn; elementnr++)
+			for (int numer_elementu = 0; numer_elementu < ilosc_kolumn; numer_elementu++)
 			{
-				vector<vector<char>> element = toMatrix(dana[wiersz][elementnr]);
+				vector<vector<char>> element = toMatrix(dana[wiersz][numer_elementu]);
 				//Dla kazdego znaku elementu
 				for (int znak = 0; znak < element[0].size(); znak++)
 					wynik[wiersz].push_back(element[0][znak]);
@@ -88,14 +89,18 @@ public:
 		{
 			//Dla kazdego elementu
 			for (int x = 0; x < wynik[i].size(); x++)
-			{
 				out.push_back(wynik[i][x]);
-			}
 			out.push_back('\n');
 		}
 		return out;
 	}
 	//operator<<
+	template <class T>
+	friend ostream& operator<<(ostream& output, matrix<T> dane)
+	{
+		output << dane.toString();
+		return output;
+	}
 
 	//Wymiary macierzy
 	int iloscWierszy() { return (*this).size(); }

@@ -12,7 +12,7 @@ int main()
 {
 	matrix<int> A(3, 3, 0), B;
 	B = A;
-	cout << A.toString();
+	cout << A;
 	system("PAUSE");
     return 0;
 }

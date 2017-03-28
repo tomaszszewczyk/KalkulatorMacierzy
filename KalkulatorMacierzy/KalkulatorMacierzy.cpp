@@ -10,7 +10,7 @@ using namespace std;
 
 int main()
 {
-	matrix<matrix<int>> A(3, 3, matrix<int>(3,3,0)), B;
+	matrix<matrix<matrix<int>>> A(3, 3, matrix<matrix<int>>(3,3,matrix<int>(3,3,0))), B;
 	B = A;
 	cout << A;
 	system("PAUSE");

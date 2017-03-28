@@ -12,6 +12,13 @@ string stringer(int dana)
 	return string(text);
 }
 
+string stringer(float dana)
+{
+	char text[1000];
+	sprintf_s(text, "%f", dana);
+	return string(text);
+}
+
 //toMatrix dla liczb
 template<class T>
 vector<vector<char>> toMatrix(T& dana)
@@ -33,27 +40,42 @@ public:
 	//Operacje na macierzach
 
 	//Dodawanie
-	matrix<TYP>& operator+(matrix<TYP>& dodawana)
+	matrix<TYP> operator+(matrix<TYP>& dodawana)
 	{
+		matrix<TYP> wynik = (*this);
 		if (iloscWierszy() == dodawana.iloscWierszy() && iloscKolumn() == dodawana.iloscKolumn())
 			for (int i = 0; i < iloscWierszy(); i++)
 				for (int x = 0; x < iloscKolumn(); x++)
-					(*this)[i][x] += dodawana[i][x];
+					wynik[i][x] += dodawana[i][x];
 		else
-			throw(string error = "Dodawanie macierzy o niezgodnych wymiarach!!!\n");
+			throw(string("Dodawanie macierzy o niezgodnych wymiarach!!!\n"));
+		return wynik;
 	}
+	matrix<TYP> operator+= (matrix<TYP>& dodawana)
+	{
+		(*this) = (*this) + dodawana;
+		return (*this);
+	}
+
 	//Przeciwienstwo
-	matrix<TYP>& operator-() { return (*this)*(-1); }
+	matrix<TYP> operator-() { return (*this)*(-1); }
 	//Odejmowanie
-	matrix<TYP>& operator-(matrix<TYP>& odejmowana) { return (*this)+(-odejmowana); }
+	matrix<TYP> operator-(matrix<TYP>& odejmowana) { return (*this)+(-odejmowana); }
 	//Mnozenie przez inny typ
 	template<class T>
-	matrix<TYP>& operator*(T czynnik)
+	matrix<TYP> operator*(T czynnik)
 	{
+		matrix<TYP> wynik = (*this);
 		for (int i = 0; i < iloscWierszy(); i++)
 			for (int x = 0; x < iloscKolumn(); x++)
-				(*this)[i][x] *= dodawana[i][x];
-		return;
+				wynik[i][x] *= czynnik;
+		return wynik;
+	}
+	template<class T>
+	matrix<TYP> operator*=(T czynnik)
+	{
+		(*this) = (*this)*czynnik;
+		return (*this)*czynnik;
 	}
 	//Mnozenie przez macierz
 	//Odwracanie
@@ -119,7 +141,9 @@ vector<vector<char>> toMatrix(matrix<T>& dana)
 			//Dla kazdego znaku elementu
 			for (int znak = 0; znak < dlugosc_elementu; znak++)
 				wynik[wiersz].push_back(element[0][znak]);
+			wynik[wiersz].push_back(' ');
 		}
+		wynik[wiersz].pop_back();
 		wynik[wiersz].push_back('|');
 	}
 	return wynik;

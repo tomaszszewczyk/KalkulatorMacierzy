@@ -10,9 +10,11 @@ using namespace std;
 
 int main()
 {
-	matrix<matrix<matrix<int>>> A(3, 3, matrix<matrix<int>>(3,3,matrix<int>(3,3,0))), B;
-	B = A;
-	cout << A;
+	matrix<matrix<matrix<int>>> A(3, 3, matrix<matrix<int>>(3,3,matrix<int>(3,3,1))), B, C;
+	//matrix<int> A(3, 3, 1), B, C;
+	B = A * 10;
+	C = A + B;
+	cout << C;
 	system("PAUSE");
     return 0;
 }

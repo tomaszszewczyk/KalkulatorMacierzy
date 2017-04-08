@@ -42,7 +42,7 @@ vector<vector<char>> toMatrix(T& dana)
 };
 
 template <class TYP>
-class matrix : private vector<vector<TYP>>
+class matrix : public vector<vector<TYP>>
 {
 public:
 	//Kontruktory
@@ -111,6 +111,35 @@ public:
 
 	//Odwracanie
 	//Wyznacznik
+	TYP det()
+	{
+		if (iloscWierszy() != iloscKolumn())
+			throw("Nie mozna obliczyc wyznacznika macierzy niekwadratowej!");
+
+		const int n = iloscKolumn();
+		if (n == 1)
+			return (*this)[0][0];
+		else
+		{
+			matrix<TYP> tmp = (*this);
+			tmp.erase(tmp.begin());
+			for (int x = 0; x < tmp.size(); x++)
+				tmp[x].erase(tmp[x].begin());
+			TYP wynik = (*this)[0][0] * tmp.det();
+
+			for (int i = 1; i < n; i++)
+			{
+				tmp = (*this);
+				tmp.erase(tmp.begin()+i);
+				for (int x = 0; x < tmp.size(); x++)
+					tmp[x].erase(tmp[x].begin());
+				wynik += (*this)[i][0] * tmp.det() * static_cast<int>(pow(-1, i));
+			}
+			return wynik;
+		}
+
+	}
+
 	//Transpozycja
 	matrix<TYP> transp()
 	{

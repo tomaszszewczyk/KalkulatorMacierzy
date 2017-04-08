@@ -11,6 +11,7 @@ using namespace std;
 
 int main()
 {
+	//Zapisanie czasu startu
 	time_t start = time(NULL);
 	
 	matrix<matrix<matrix<int>>> A(3, 3, matrix<matrix<int>>(3,3,matrix<int>(3,3,2))), B, C;
@@ -22,14 +23,18 @@ int main()
 		A[1][1] = matrix<matrix<int>>(3, 3, matrix<int>(3, 3, 3));
 		A[2][2] = matrix<matrix<int>>(3, 3, matrix<int>(3, 3, 3));
 
-		cout << A << endl;
-		matrix<matrix<int>> wynik = A.det();
-		cout << "DetA = " << endl << wynik;
+		B = A * 2;
+		C = A + B;
+		A = B * C;
+
+		cout << "DetA = " << endl << A.det();
 	}
 	catch (string error)
 	{
 		cout << error;
 	}
+
+	//Raport zakoñczenia
 	time_t czastrwania = time(NULL) - start;
 	cout << endl << endl << "Wykonanie programu zajelo: " << czastrwania << "s" << endl;
 	system("PAUSE");

@@ -41,6 +41,7 @@ vector<vector<char>> toMatrix(T& dana)
 	return wynik;
 };
 
+//Klasa matrix
 template <class TYP>
 class matrix : public vector<vector<TYP>>
 {
@@ -109,7 +110,8 @@ public:
 		return wynik;
 	}
 
-	//Odwracanie
+	//Odwracanie - niemo¿liwe ze wzglêdu na definicjê
+
 	//Wyznacznik
 	TYP det()
 	{
@@ -183,6 +185,7 @@ public:
 	size_t iloscKolumn() { return (*this)[0].size(); }
 };
 
+//Przyjaciele klasy matrix
 template <class T>
 ostream& operator<<(ostream& output, matrix<T> dane)
 {

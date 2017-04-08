@@ -45,11 +45,12 @@ template <class TYP>
 class matrix : private vector<vector<TYP>>
 {
 public:
+	//Kontruktory
 	matrix() : vector<vector<TYP>>(1, vector<TYP>(1)) {}
 	matrix(int x, int y) : vector<vector<TYP>>(x, vector<TYP>(y)) {}
 	matrix(int x, int y, TYP stdelement) : vector<vector<TYP>>(x, vector<TYP>(y, stdelement)) {}
+	
 	//Operacje na macierzach
-
 	//Dodawanie
 	matrix<TYP> operator+(matrix<TYP> dodawana)
 	{
@@ -71,7 +72,8 @@ public:
 	matrix<TYP> operator-() { return (*this)*(-1); }
 	//Odejmowanie
 	matrix<TYP> operator-(matrix<TYP>& odejmowana) { return (*this)+(-odejmowana); }
-	//Mnozenie przez inny typ
+
+	//Mnozenie przez inny typ (przez skalar)
 	template<class T>
 	matrix<TYP> operator*(T czynnik)
 	{
@@ -82,11 +84,8 @@ public:
 		return wynik;
 	}
 	template<class T>
-	matrix<TYP> operator*=(T czynnik)
-	{
-		(*this) = (*this)*czynnik;
-		return (*this)*czynnik;
-	}
+	matrix<TYP> operator*=(T czynnik) { return (*this)*czynnik; }
+
 	//Mnozenie przez macierz
 	matrix<TYP> operator*(matrix<TYP> czynnik)
 	{
@@ -109,20 +108,22 @@ public:
 			}
 		return wynik;
 	}
+
 	//Odwracanie
 	//Wyznacznik
 	//Transpozycja
+	
 
 	//Wyœwietlanie macierzy
 	//toMatrix dla klas
-
 	template<class T>
 	friend vector<vector<char>> toMatrix(matrix<T>& dana);
 	//toMatrix dla klas klas itd
 	template<class T>
 	friend vector<vector<char>> toMatrix(matrix<matrix<T>>& dana);
 
-	//toString
+	//Wygodne wyswietlanie macierzy
+	//Zamiana macierzy na string
 	string toString()
 	{
 		vector<vector<char>> wynik = toMatrix(*this);

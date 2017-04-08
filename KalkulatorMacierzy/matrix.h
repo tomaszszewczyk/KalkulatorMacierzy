@@ -112,7 +112,14 @@ public:
 	//Odwracanie
 	//Wyznacznik
 	//Transpozycja
-	
+	matrix<TYP> transp()
+	{
+		matrix<TYP> wynik(iloscKolumn(), iloscWierszy());
+		for (int i = 0; i < iloscWierszy(); i++)
+			for (int x = 0; x < iloscKolumn(); x++)
+				wynik[x][i] = (*this)[i][x];
+		return wynik;
+	}
 
 	//Wyœwietlanie macierzy
 	//toMatrix dla klas

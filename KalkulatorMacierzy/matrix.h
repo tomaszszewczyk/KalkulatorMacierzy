@@ -9,7 +9,7 @@ using namespace std;
 string stringer(int dana)
 {
 	char text[1000];
-	sprintf_s(text, "%d", dana);
+	sprintf(text, "%d", dana);
 	return string(text);
 }
 
@@ -17,7 +17,7 @@ string stringer(int dana)
 string stringer(float dana)
 {
 	char text[1000];
-	sprintf_s(text, "%f", dana);
+	sprintf(text, "%f", dana);
 	return string(text);
 }
 
@@ -25,16 +25,16 @@ string stringer(float dana)
 string stringer(double dana)
 {
 	char text[1000];
-	sprintf_s(text, "%f", dana);
+	sprintf(text, "%f", dana);
 	return string(text);
 }
 
 //toMatrix dla liczb
 template<class T>
-vector<vector<char>> toMatrix(T& dana)
+vector<vector<char> > toMatrix(T& dana)
 {
 	string text = stringer(dana);
-	vector<vector<char>> wynik;
+	vector<vector<char> > wynik;
 	wynik.push_back(vector<char>());
 	for (int i = 0; i < text.size(); i++)
 		wynik[0].push_back(text[i]);
@@ -43,14 +43,14 @@ vector<vector<char>> toMatrix(T& dana)
 
 //Klasa matrix
 template <class TYP>
-class matrix : public vector<vector<TYP>>
+class matrix : public vector<vector<TYP> >
 {
 public:
 	//Kontruktory
-	matrix() : vector<vector<TYP>>(1, vector<TYP>(1)) {}
-	matrix(int x, int y) : vector<vector<TYP>>(x, vector<TYP>(y)) {}
-	matrix(int x, int y, TYP stdelement) : vector<vector<TYP>>(x, vector<TYP>(y, stdelement)) {}
-	
+	matrix() : vector<vector<TYP> >(1, vector<TYP>(1)) {}
+	matrix(int x, int y) : vector<vector<TYP> >(x, vector<TYP>(y)) {}
+	matrix(int x, int y, TYP stdelement) : vector<vector<TYP> >(x, vector<TYP>(y, stdelement)) {}
+
 	//Operacje na macierzach
 	//Dodawanie
 	matrix<TYP> operator+(matrix<TYP> dodawana)
@@ -92,14 +92,14 @@ public:
 	{
 		if (czynnik.iloscWierszy() != iloscKolumn() || czynnik.iloscKolumn() != iloscWierszy())
 		{
-			string error = "Niezgodnoœæ wymiarow mnozonych macierzy.";
+			string error = "Niezgodnoï¿½ï¿½ wymiarow mnozonych macierzy.";
 			throw(error);
 		}
-		
+
 		matrix<TYP> wynik(iloscWierszy(), czynnik.iloscKolumn(), TYP());
 		TYP tmp;
-		for (int i = 0; i < wynik.iloscWierszy(); i++) //Dla ka¿dego wiersza wyniku
-			for (int x = 0; x < wynik.iloscKolumn(); x++)	//Dla ka¿dej komórki wyniku
+		for (int i = 0; i < wynik.iloscWierszy(); i++) //Dla kaï¿½dego wiersza wyniku
+			for (int x = 0; x < wynik.iloscKolumn(); x++)	//Dla kaï¿½dej komï¿½rki wyniku
 			{
 				int y = 0;
 				wynik[i][x] = (*this)[i][y] * czynnik[y][x];
@@ -110,7 +110,7 @@ public:
 		return wynik;
 	}
 
-	//Odwracanie - niemo¿liwe ze wzglêdu na definicjê
+	//Odwracanie - niemoï¿½liwe ze wzglï¿½du na definicjï¿½
 
 	//Wyznacznik
 	TYP det()
@@ -152,19 +152,19 @@ public:
 		return wynik;
 	}
 
-	//Wyœwietlanie macierzy
+	//Wyï¿½wietlanie macierzy
 	//toMatrix dla klas
 	template<class T>
-	friend vector<vector<char>> toMatrix(matrix<T>& dana);
+	friend vector<vector<char> > toMatrix(matrix<T>& dana);
 	//toMatrix dla klas klas itd
 	template<class T>
-	friend vector<vector<char>> toMatrix(matrix<matrix<T>>& dana);
+	friend vector<vector<char> > toMatrix(matrix<matrix<T> >& dana);
 
 	//Wygodne wyswietlanie macierzy
 	//Zamiana macierzy na string
 	string toString()
 	{
-		vector<vector<char>> wynik = toMatrix(*this);
+		vector<vector<char> > wynik = toMatrix(*this);
 		string out;
 		//Dla kazdego wiersz
 		for (int i = 0; i < wynik.size(); i++)
@@ -194,11 +194,11 @@ ostream& operator<<(ostream& output, matrix<T> dane)
 };
 
 template<class T>
-vector<vector<char>> toMatrix(matrix<T>& dana)
+vector<vector<char> > toMatrix(matrix<T>& dana)
 {
 	const size_t ilosc_wierszy = dana.iloscWierszy();
 	const size_t ilosc_kolumn = dana.iloscKolumn();
-	vector<vector<char>> wynik;
+	vector<vector<char> > wynik;
 	//Dla kazdego wiersza
 	for (int wiersz = 0; wiersz < ilosc_wierszy; wiersz++)
 	{
@@ -207,7 +207,7 @@ vector<vector<char>> toMatrix(matrix<T>& dana)
 		//Dla kazdego elementu w wierszu
 		for (int numer_elementu = 0; numer_elementu < ilosc_kolumn; numer_elementu++)
 		{
-			vector<vector<char>> element = toMatrix(dana[wiersz][numer_elementu]);
+			vector<vector<char> > element = toMatrix(dana[wiersz][numer_elementu]);
 			const size_t dlugosc_elementu = element[0].size();
 			//Dla kazdego znaku elementu
 			for (int znak = 0; znak < dlugosc_elementu; znak++)
@@ -221,14 +221,14 @@ vector<vector<char>> toMatrix(matrix<T>& dana)
 }
 
 template<class T>
-vector<vector<char>> toMatrix(matrix<matrix<T>>& dana)
+vector<vector<char> > toMatrix(matrix<matrix<T> >& dana)
 {
 	const size_t ilosc_wierszy = dana.iloscWierszy();
 	const size_t ilosc_kolumn = dana.iloscKolumn();
 	const size_t ilosc_wierszy_elementu = toMatrix(dana[0][0]).size();
 	const size_t ilosc_kolumn_elementu = toMatrix(dana[0][0])[0].size();
 
-	vector<vector<char>> wynik;
+	vector<vector<char> > wynik;
 	//Dla kazdego wiersza
 	for (int wiersz = 0; wiersz < ilosc_wierszy; wiersz++)
 	{
@@ -242,7 +242,7 @@ vector<vector<char>> toMatrix(matrix<matrix<T>>& dana)
 		//Dla kazdego elementu w wierszu
 		for (int numer_elementu = 0; numer_elementu < ilosc_kolumn; numer_elementu++)
 		{
-			vector<vector<char>> element = toMatrix(dana[wiersz][numer_elementu]);
+			vector<vector<char> > element = toMatrix(dana[wiersz][numer_elementu]);
 			const size_t ilosc_wierszy_elementu = element.size();
 			const size_t ilosc_kolumn_elementu = element[0].size();
 			//Dla kazdego wiersza elementu

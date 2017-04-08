@@ -1,7 +1,8 @@
 // KalkulatorMacierzy.cpp : Defines the entry point for the console application.
-//
+//LinuxEdition
 
-#include "stdafx.h"
+#include <cmath>
+#include <cstdio>
 #include "matrix.h"
 #include <iostream>
 #include <string>
@@ -13,15 +14,15 @@ int main()
 {
 	//Zapisanie czasu startu
 	time_t start = time(NULL);
-	
-	matrix<matrix<matrix<int>>> A(3, 3, matrix<matrix<int>>(3,3,matrix<int>(3,3,2))), B, C;
+
+	matrix<matrix<matrix<int> > > A(3, 3, matrix<matrix<int> >(3,3,matrix<int>(3,3,2))), B, C;
 	//matrix<matrix<int>> A(3, 3, matrix<int>(3,3,2)), B, C;
 	//matrix<int> A(3, 3, 2), B, C;
 	try
 	{
-		A[0][0] = matrix<matrix<int>>(3, 3, matrix<int>(3, 3, 3));
-		A[1][1] = matrix<matrix<int>>(3, 3, matrix<int>(3, 3, 3));
-		A[2][2] = matrix<matrix<int>>(3, 3, matrix<int>(3, 3, 3));
+		A[0][0] = matrix<matrix<int> >(3, 3, matrix<int>(3, 3, 3));
+		A[1][1] = matrix<matrix<int> >(3, 3, matrix<int>(3, 3, 3));
+		A[2][2] = matrix<matrix<int> >(3, 3, matrix<int>(3, 3, 3));
 
 		B = A * 2;
 		C = A + B;
@@ -34,10 +35,8 @@ int main()
 		cout << error;
 	}
 
-	//Raport zakoñczenia
+	//Raport zakoï¿½czenia
 	time_t czastrwania = time(NULL) - start;
 	cout << endl << endl << "Wykonanie programu zajelo: " << czastrwania << "s" << endl;
-	system("PAUSE");
     return 0;
 }
-

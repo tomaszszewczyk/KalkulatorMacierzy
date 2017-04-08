@@ -5,6 +5,7 @@
 
 using namespace std;
 
+//Zamiana int na string
 string stringer(int dana)
 {
 	char text[1000];
@@ -12,7 +13,16 @@ string stringer(int dana)
 	return string(text);
 }
 
+//Zamiana float na string
 string stringer(float dana)
+{
+	char text[1000];
+	sprintf_s(text, "%f", dana);
+	return string(text);
+}
+
+//Zamiana double na string
+string stringer(double dana)
 {
 	char text[1000];
 	sprintf_s(text, "%f", dana);
@@ -32,15 +42,16 @@ vector<vector<char>> toMatrix(T& dana)
 };
 
 template <class TYP>
-class matrix : public vector<vector<TYP>>
+class matrix : private vector<vector<TYP>>
 {
 public:
 	matrix() : vector<vector<TYP>>(1, vector<TYP>(1)) {}
+	matrix(int x, int y) : vector<vector<TYP>>(x, vector<TYP>(y)) {}
 	matrix(int x, int y, TYP stdelement) : vector<vector<TYP>>(x, vector<TYP>(y, stdelement)) {}
 	//Operacje na macierzach
 
 	//Dodawanie
-	matrix<TYP> operator+(matrix<TYP>& dodawana)
+	matrix<TYP> operator+(matrix<TYP> dodawana)
 	{
 		matrix<TYP> wynik = (*this);
 		if (iloscWierszy() == dodawana.iloscWierszy() && iloscKolumn() == dodawana.iloscKolumn())
@@ -51,10 +62,9 @@ public:
 			throw(string("Dodawanie macierzy o niezgodnych wymiarach!!!\n"));
 		return wynik;
 	}
-	matrix<TYP> operator+= (matrix<TYP>& dodawana)
+	matrix<TYP> operator+= (matrix<TYP> dodawana)
 	{
-		(*this) = (*this) + dodawana;
-		return (*this);
+		return (*this) + dodawana;
 	}
 
 	//Przeciwienstwo
@@ -78,6 +88,27 @@ public:
 		return (*this)*czynnik;
 	}
 	//Mnozenie przez macierz
+	matrix<TYP> operator*(matrix<TYP> czynnik)
+	{
+		if (czynnik.iloscWierszy() != iloscKolumn() || czynnik.iloscKolumn() != iloscWierszy())
+		{
+			string error = "Niezgodnoœæ wymiarow mnozonych macierzy.";
+			throw(error);
+		}
+		
+		matrix<TYP> wynik(iloscWierszy(), czynnik.iloscKolumn(), TYP());
+		TYP tmp;
+		for (int i = 0; i < wynik.iloscWierszy(); i++) //Dla ka¿dego wiersza wyniku
+			for (int x = 0; x < wynik.iloscKolumn(); x++)	//Dla ka¿dej komórki wyniku
+			{
+				int y = 0;
+				wynik[i][x] = (*this)[i][y] * czynnik[y][x];
+				y++;
+				for (; y < iloscKolumn(); y++) //Dla kazdej kolumny this lub wiersza czynnik
+					wynik[i][x] += (*this)[i][y] * czynnik[y][x];
+			}
+		return wynik;
+	}
 	//Odwracanie
 	//Wyznacznik
 	//Transpozycja
